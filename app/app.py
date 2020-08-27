@@ -25,7 +25,7 @@ def index():
 
 @app.route("/metrics")
 def metrics():
-    values = query_metrics
+    values = query_metrics()
     return render_template("metrics.html", struct=values)
 
 if __name__ == "__main__":
