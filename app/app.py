@@ -9,7 +9,15 @@ user = os.getenv('REDMINE_USER')
 pwd = os.getenv('REDMINE_PASSWORD')
 
 app = Flask(__name__)
-redmine = Redmine(redmine_url, username=username, password=pwd)
+redmine = Redmine(redmine_url, username=user, password=pwd)
+
+def query_metrics():
+    values = {}
+    values['rdm_project_all'] = len(redmine.project.all())
+    for project in redmine.project.all():
+        string = 'rdm_project_{}_issues_all'.format(project.identifier)
+        values[string] = len(project.issues)
+    return values
 
 @app.route('/')
 def index():
@@ -17,9 +25,7 @@ def index():
 
 @app.route("/metrics")
 def metrics():
-    values = {
-        rdm_project_all: len(redmine.project.all())
-    }
+    values = query_metrics
     return render_template("metrics.html", struct=values)
 
 if __name__ == "__main__":
