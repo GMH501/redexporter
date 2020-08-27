@@ -1,0 +1,17 @@
+<html>
+    <style>
+        h1 { 
+            font-family: Consolas, monaco, monospace; 
+            font-size: 12px; 
+            font-style: normal; 
+            font-variant: normal; 
+            font-weight: 600; 
+            line-height: 5px; 
+        } 
+    </style>
+    <body>
+        {% for key, value in struct.items() %}
+           <h1>{{key}} {{value}}</h1>
+        {% endfor %}
+    </body>
+</html>
