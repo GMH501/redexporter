@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: redexporter
+  name: redexporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redexporter
+  template:
+    metadata:
+      labels:
+        app: redexporter
+    spec:
+      containers:
+        - image: gmh501/redexporter:latest
+          imagePullPolicy: Always
+          name: redexporter
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: REDMINE_URL
+              value: "http://redmine-testredmine.apps.cluster-2621.2621.sandbox1293.opentlc.com/"
+            - name: REDMINE_USER
+              value: admin
+            - name: REDMINE_PASSWORD
+              value: admin123
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: redexporter 
+  name: redexporter 
+spec:
+  type: NodePort
+  ports:
+    - name: 8080-tcp
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: redexporter 
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: redexporter
+  name: redexporter 
+spec:
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: redexporter 
+    weight: 100 
