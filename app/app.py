@@ -15,7 +15,7 @@ def query_metrics():
     values = {}
     values['rdm_project_all'] = len(redmine.project.all())
     for project in redmine.project.all():
-        string = 'rdm_project_issues_all{project=\"{}\"}'.format(project.identifier)
+        string = "rdm_project_issues_all{project=\"" + (project.identifier) + "\"}"
         values[string] = len(project.issues)
     return values
 
