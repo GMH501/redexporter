@@ -15,7 +15,7 @@ def query_metrics():
     text = ""
     text += 'rdm_project_all {}'.format(len(redmine.project.all())
     for project in redmine.project.all():
-        string = "\nrdm_project_issues_all{project=" + project.identifier + "} " + str(len(project.issues)) 
+        text += "\nrdm_project_issues_all{project=" + project.identifier + "} " + str(len(project.issues)) 
     return text
 
 @app.route('/')
