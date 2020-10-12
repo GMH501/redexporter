@@ -12,12 +12,11 @@ app = Flask(__name__)
 redmine = Redmine(redmine_url, username=user, password=pwd)
 
 def query_metrics():
-    values = {}
-    values['rdm_project_all'] = len(redmine.project.all())
+    text = ""
+    text += 'rdm_project_all {}'.format(len(redmine.project.all())
     for project in redmine.project.all():
-        string = 'rdm_project_{}_issues_all'.format(project.identifier)
-        values[string] = len(project.issues)
-    return values
+        string = "\nrdm_project_issues_all{project=" + project.identifier + "} " + str(len(project.issues)) 
+    return text
 
 @app.route('/')
 def index():
