@@ -1,4 +1,1 @@
-{% for key, value in struct.items() %}
-{{ '\n' }}{{key}} {{value}}
-{% endfor %}
-{{ '\n' }}
+{{ struct | safe }}
