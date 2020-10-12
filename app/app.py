@@ -15,7 +15,17 @@ def query_metrics():
     text = ""
     text += 'rdm_project_all {}'.format(len(redmine.project.all()))
     for project in redmine.project.all():
-        text += "\nrdm_project_issues_all{project=" + project.identifier + "} " + str(len(project.issues)) 
+        opened = 0
+        closed = 0
+        text += "\nrdm_project_issues_all{project=\"" + project.identifier + "\"} " + str(len(project.issues))
+        for issue in project.issues:
+            if issue.status.name == "open":
+                opened +=1
+            if issue.status.name == "closed":
+                closed +=1
+        text += "\nrdm_issues_opened_all{project=\"" + project.identifier + "\"} " + str(opened)
+        text += "\nrdm_issues_closed_all{project=\"" + project.identifier + "\"} " + str(opened)
+        text += "\n"
     return text
 
 @app.route('/')
