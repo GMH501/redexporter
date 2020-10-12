@@ -13,7 +13,7 @@ redmine = Redmine(redmine_url, username=user, password=pwd)
 
 def query_metrics():
     text = ""
-    text += 'rdm_project_all {}'.format(len(redmine.project.all())
+    text += 'rdm_project_all {}'.format(len(redmine.project.all()))
     for project in redmine.project.all():
         text += "\nrdm_project_issues_all{project=" + project.identifier + "} " + str(len(project.issues)) 
     return text
