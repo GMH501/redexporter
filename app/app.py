@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, make_response
 from redminelib import Redmine
 
 
@@ -26,7 +26,9 @@ def index():
 @app.route("/metrics")
 def metrics():
     values = query_metrics()
-    return render_template("metrics.html", struct=values)
+    resp = make_response(render_template("metrics.html", struct=values)) 
+    resp.headers['Content-Type'] = 'text/plain'
+    return resp
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
