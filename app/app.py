@@ -24,7 +24,7 @@ def query_metrics():
             if issue.status.name == "closed":
                 closed +=1
         text += "\nrdm_issues_opened_all{project=\"" + project.identifier + "\"} " + str(opened)
-        text += "\nrdm_issues_closed_all{project=\"" + project.identifier + "\"} " + str(opened)
+        text += "\nrdm_issues_closed_all{project=\"" + project.identifier + "\"} " + str(closed)
         text += "\n"
     return text
 
